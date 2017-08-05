@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Don't include built files + Makefile (cause' the first one is good,and not with our ip :3)
+Makefile
+build
+
+# Compiled 3DS files
+*.3dsx
+*.elf
+*.smdh
