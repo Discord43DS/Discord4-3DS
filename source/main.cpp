@@ -5,21 +5,23 @@
 
 using namespace std;
 
+// Get length of an array
+template <typename T,unsigned S>
+inline unsigned arraysize(const T (&v)[S]) { return S; }
+
 int main(void)
 {
-	string menu[3] = {"Server1", "Server2", "Server3"};
-	int pointer = 0;
+	string menu[] = {"Server1", "Server2", "Server3", "Server4", "Server5", "Server6", "Server7", "Server8", "Server9", "Server10", "Server11", "Server12", "Server13", "Server14", "Server15", "Server16", "Server17", "Server18", "Server19", "Server20"};
+	unsigned int pointer = 0;
 
 	// Initialize services
 	gfxInitDefault();
 	consoleInit(GFX_TOP, NULL);  //TODO: Change to Bottom
 
-	u32 kDownOld = 0; //In these variables there will be information about keys detected in the previous frame
-
 	printf("Menu\n\n");
 	printf(("\x1b[31m" + menu[0] + "\x1b[0m\n").c_str());
 
-	for (int i=1; i<3; i++)
+	for (unsigned int i=1; i< arraysize(menu); i++)
 		printf((menu[i] + "\n").c_str());
 
 	while (aptMainLoop())
@@ -37,20 +39,20 @@ int main(void)
 		if (kDown & KEY_DUP || kDown & KEY_DDOWN){
 			if (kDown & KEY_DUP){
 				pointer -= 1;
-				if (pointer == -1){
-					pointer = 2;
+				if (pointer == (unsigned) -1){
+					pointer = arraysize(menu) - 1;
 				}
 			}
 			else if (kDown & KEY_DDOWN){
 				pointer += 1;
-				if(pointer == 3){
+				if(pointer == arraysize(menu)){
 					pointer = 0;
 				}
 			}
 			consoleClear();
 			printf("Menu\n\n");
 
-			for (int i=0; i<3; ++i){
+			for (unsigned int i=0; i< arraysize(menu); ++i){
 				if (i == pointer)
 					printf(("\x1b[31m" + menu[i] + "\x1b[0m\n").c_str());
 				else{
@@ -60,9 +62,6 @@ int main(void)
 
 
 		}
-
-		//Set keys old values for the next frame
-		kDownOld = kDown;
 
 		// Flush and swap framebuffers
 		gfxFlushBuffers();
